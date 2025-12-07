@@ -1,6 +1,6 @@
 went_over_0 = 0
 
-with open('day1.txt', 'r', encoding='utf-8') as f:
+with open('2025/day1/day1.txt', 'r', encoding='utf-8') as f:
     zeilen_liste = f.readlines()
 
 print(zeilen_liste[0])
