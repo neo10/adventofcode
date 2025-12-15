@@ -3,23 +3,18 @@ import day1
 
 class TestOverflows(unittest.TestCase):
 
-    # ---------------------------------------------------------------
-    # 1. NEGATIV-TESTS (Start bei 0)
-    # Wir stehen ganz links (0). Jeder Schritt nach links löst sofort Overflow aus.
-    # ---------------------------------------------------------------
     def test_negative_moves_from_zero(self):
         startpos = 0
         
-        # Format: (Bewegung, Erwarteter Overflow)
         test_cases = [
-            (0,     0),   # Keine Bewegung
-            (-1,   0),   # Sofort raus -> -1
-            (-99,  0),   # Immer noch im ersten Minus-Block
-            (-100, 1),   # Exakt die Grenze (Python Logik: -100/100 = -1)
-            (-101, 1),   # JETZT sind wir im zweiten Block (-2)
+            (0,     0),   
+            (-1,   0),   
+            (-99,  0),   
+            (-100, 1),   
+            (-101, 1),   
             (-199, 1),   
-            (-200, 2),   # Exakt zwei volle Blöcke
-            (-201, 2)    # Dritter Block beginnt
+            (-200, 2),   
+            (-201, 2)    
         ]
 
         for move, expected in test_cases:
@@ -28,22 +23,59 @@ class TestOverflows(unittest.TestCase):
                 self.assertEqual(result, expected, 
                     f"Fail bei Start={startpos}, Move={move}. Erwartet: {expected}, Ist: {result}")
 
-    # ---------------------------------------------------------------
-    # 2. POSITIV-TESTS (Start bei 0)
-    # Wir stehen bei 0. Wir müssen erst 100 schaffen für den ersten Overflow.
-    # ---------------------------------------------------------------
     def test_positive_moves_from_zero(self):
         startpos = 0
         
         test_cases = [
             (1,    0),
-            (99,   0),    # Wir landen auf 99 -> Alles gut (0 Overflows)
-            (100,  1),    # Wir landen auf 100 -> 1x Overflow
+            (99,   0),   
+            (100,  1),    
             (101,  1),
             (199,  1),
-            (200,  2),    # Exakt 2x Overflow
+            (200,  2),   
             (299,  2),
             (300,  3)
+        ]
+
+        for move, expected in test_cases:
+            with self.subTest(move=move):
+                result = day1.count_zero_crossings_only(startpos, move)
+                self.assertEqual(result, expected,
+                    f"Fail bei Start={startpos}, Move={move}. Erwartet: {expected}, Ist: {result}")
+
+    def test_positive_moves_from_20(self):
+        startpos = 20
+        
+        test_cases = [
+            (0,    0),
+            (1,    0),   
+            (79,  0),    
+            (80,  1),
+            (81,  1),
+            (100,  1),   
+            (200,  2),
+            (180,  2),
+            (181,  2)
+        ]
+
+        for move, expected in test_cases:
+            with self.subTest(move=move):
+                result = day1.count_zero_crossings_only(startpos, move)
+                self.assertEqual(result, expected,
+                    f"Fail bei Start={startpos}, Move={move}. Erwartet: {expected}, Ist: {result}")
+    def test_negative_moves_from_20(self):
+        startpos = 20
+        
+        test_cases = [
+            (0,    0),
+            (-1,    0),   
+            (-19,  0),    
+            (-20,  1),
+            (-21,  1),
+            (-100,  1),   
+            (-200,  2),
+            (-120,  2),
+            (-121,  2)
         ]
 
         for move, expected in test_cases:

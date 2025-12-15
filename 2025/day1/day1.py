@@ -17,7 +17,7 @@ def count_zero_crossings_only(pos, move)->int:
     if endpos > 99:
         return endpos // 100
     if endpos < 0:
-        return (abs(endpos)) // 100 + 0 if pos == 0 else 1
+        return (abs(endpos)) // 100 + (0 if pos == 0 else 1)
 
 #Teil1
 solution1 = 0
@@ -43,6 +43,6 @@ for line in zeilen_liste:
     pos = (pos + move) % 100
 
 
-print("Lösung Genau 0: ", solution1)
+print("Endet auf 0: ", solution1)
 print("Lösung Klick auf 0: ", solution2)
 
