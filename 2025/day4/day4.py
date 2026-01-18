@@ -1,6 +1,6 @@
 input_array = []
 
-with open('./test.txt', 'r', encoding='utf-8') as f:
+with open('./data.txt', 'r', encoding='utf-8') as f:
     for line in f:
         line = line.strip()            
         zeichen = [str(c) for c in line] 
@@ -12,19 +12,33 @@ def is_roll_of_paper(array:list[str],index_y:int,index_x:int)->bool:
         return True
     
     return False
-
-indexes = []
-max_index = len(input_array)-1
+solution1 = 0
+neighbor_offsets = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+max_i = len(input_array) - 1
+max_k = len(input_array[0]) - 1
 for i in range(len(input_array)):
-    top_index = i-1 if i > 0 else 0
-    bottom_index = i+1 if i < max_index else i
-
     for k in range(len(input_array[i])):
-        max_index2 = len(input_array[i])-1
-        left_index = k-1 if k > 0 else 0
-        right_index = k+1 if k < max_index2 else k
+        neighborRolls = 0
+        is_roll = (input_array[i][k] == '@')
+        if not(is_roll):
+            continue
+        for di, dk in neighbor_offsets:
+            ni = i + di
+            nk = k + dk
+            if not(0 <= ni <= max_i and 0 <= nk <= max_k): continue
+            neighbor = input_array[ni][nk]
+            if neighbor == '@':
+                neighborRolls += 1
+        
+        if neighborRolls < 4:
+            solution1 +=1
 
-neighbor_indexes = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+print("solution1: ",solution1)
+
+
+
+
+
 
 
         
