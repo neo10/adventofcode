@@ -47,7 +47,8 @@ def get_calculations(numbers: list[int], operators: list[str]) -> list[Calculati
     return result
 
 
-numbers, operators = load_data("data.txt")
+numbers, operators = load_data("test.txt")
+print(numbers)
 calculations = get_calculations(numbers, operators)
 
 solution1 = 0
