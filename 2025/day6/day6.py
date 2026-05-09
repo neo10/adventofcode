@@ -14,6 +14,10 @@ def load_data(path: str):
     ops = re.findall(r"\S", lines[-1])
     return number_rows, ops
 
+@dataclass
+class Calculation:
+    calcSymbol: str
+    calcNumbers: list[str] = field(default_factory=list)
 
 @dataclass
 class Calculator:
@@ -29,11 +33,6 @@ class Calculator:
             case _:
                 raise ValueError(f"Unknown symbol: {calculation.calcSymbol}")
 
-
-@dataclass
-class Calculation:
-    calcSymbol: str
-    calcNumbers: list[str] = field(default_factory=list)
 
 
 def get_calculations(numbers: list[int], operators: list[str]) -> list[Calculation]:
