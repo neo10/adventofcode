@@ -1,4 +1,4 @@
-with open("./data.txt", "r", encoding="utf-8") as f:
+with open("./data.txt", encoding="utf-8") as f:
     input = f.read().strip()
 
 bereiche = []
@@ -18,10 +18,7 @@ def is_digits_repeated_twice(number: int) -> bool:
     first_half = s[:halb]
     second_half = s[halb:]
 
-    if first_half == second_half:
-        return True
-    else:
-        return False
+    return first_half == second_half
 
 
 def is_repeated_any_number(number: int) -> bool:
@@ -41,7 +38,7 @@ def is_repeated_any_number(number: int) -> bool:
                 is_equal = False
                 break
             string_to_compare = zahl_string[i : i + intervall]
-        if is_equal == True:
+        if is_equal:
             return True
     return False
 

@@ -1,6 +1,6 @@
 input_array = []
 
-with open("./input.txt", "r", encoding="utf-8") as f:
+with open("./input.txt", encoding="utf-8") as f:
     for line in f:
         line = line.strip()
         zahlen = [int(c) for c in line]
@@ -9,7 +9,7 @@ with open("./input.txt", "r", encoding="utf-8") as f:
 
 def get_max_batteries(digitArray: list[int], start_index: int, digitCount: int) -> str:
     if digitCount > len(digitArray):
-        raise ValueError(f"digitCount or start_index are not valid for given array")
+        raise ValueError("digitCount or start_index are not valid for given array")
     if digitCount == 0:
         return ""
     max_digit = 0

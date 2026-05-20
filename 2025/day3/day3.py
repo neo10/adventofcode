@@ -1,6 +1,6 @@
 input_array = []
 
-with open("./input.txt", "r", encoding="utf-8") as f:
+with open("./input.txt", encoding="utf-8") as f:
     for line in f:
         line = line.strip()
         zahlen = [int(c) for c in line]
@@ -22,7 +22,7 @@ def quick_sort(line: list[int], reverse: bool = False) -> list[int]:
         else:
             bigger_numbers.append(number)
 
-    if reverse == False:
+    if not reverse:
         return (
             quick_sort(smaller_numbers, reverse)
             + [ref_number]

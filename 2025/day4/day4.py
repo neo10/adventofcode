@@ -8,9 +8,7 @@ with open("./data.txt", encoding="utf-8") as f:
 
 
 def is_roll_of_paper(array: list[str], index_y: int, index_x: int) -> bool:
-    if array[index_y][index_x] == "@":
-        return True
-    return False
+    return array[index_y][index_x] == "@"
 
 
 solution1 = 0

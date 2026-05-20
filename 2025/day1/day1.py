@@ -1,4 +1,4 @@
-with open("2025/day1/day1.txt", "r", encoding="utf-8") as f:
+with open("2025/day1/day1.txt", encoding="utf-8") as f:
     zeilen_liste = f.readlines()
 
 

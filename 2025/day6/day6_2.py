@@ -10,7 +10,6 @@ def get_grid(lines: list[str]) -> list[str]:
 
 
 def calculate_solution(numbers: list[int], calcSymbol: str) -> int:
-    print(calcSymbol)
     match calcSymbol:
         case "+":
             result = 0
@@ -26,37 +25,35 @@ def calculate_solution(numbers: list[int], calcSymbol: str) -> int:
     return result
 
 
-def get_max_digits(grid: list[str]) -> int:
-    result = 0
-    counter = 0
+def get_grid_array(grid: list[str], indexes: list[int]) -> list[list[str]]:
+    result: list[list[str]] = []
     for line in grid:
-        for elem in line:
-            if elem.isdigit():
-                counter += 1
-                if counter > result:
-                    result = counter
-            else:
-                counter = 0
+        line_list: list[str] = []
+        for i in range(len(indexes) - 1):
+            start = indexes[i] + 1
+            end = indexes[i + 1]
+            number_string = line[start:end]
+            line_list.append(number_string)
+        result.append(line_list)
+
     return result
 
 
-def get_grid_array(grid: list[str], numberLength: int) -> list[list[str]]:
-    result: list[list[str]] = []
-    print(grid)
+def get_group_indexes(grid: list[str]) -> list[int]:
+    result: list[int] = []
+    result.append(-1)
     for x in range(len(grid[0])):
         headerChar = grid[0][x]
-        print(f"checking for value={headerChar}")
         if headerChar == " ":
             border = True
             for y in range(len(grid)):
-                print(f"x={x}, y={y}, value={grid[y][x]}")
                 if grid[y][x] != " ":
                     border = False
                     break
             if border:
-                print("BORDER")
-        lineList: list[str] = []
+                result.append(x)
 
+    result.append(len(grid[0]))
     return result
 
 
@@ -68,11 +65,11 @@ def getCalcSymbol(inputString: str) -> str:
             return "+"
 
 
-def get_solution(grid_array: list[list[str]], maxDigits: int) -> int:
+def get_solution(grid_array: list[list[str]]) -> int:
     result = 0
     for x in range(len(grid_array[0])):
         numbers: list[int] = []
-        for num in range(maxDigits):
+        for num in range(len(grid_array[0][x])):
             number_chars = ""
             for y in range(len(grid_array)):
                 char = grid_array[y][x][num]
@@ -87,7 +84,9 @@ def get_solution(grid_array: list[list[str]], maxDigits: int) -> int:
     return result
 
 
-lines = load_data("test.txt")
+lines = load_data("data.txt")
 grid = get_grid(lines)
-maxDigits = get_max_digits(grid)
-grid_array = get_grid_array(grid, maxDigits)
+indexes = get_group_indexes(grid)
+grid_array = get_grid_array(grid, indexes)
+solution = get_solution(grid_array)
+print(f"Lösung={solution}")
