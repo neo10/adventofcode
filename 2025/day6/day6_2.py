@@ -1,3 +1,6 @@
+import math
+
+
 def load_data(path: str) -> list[str]:
     with open(path, encoding="utf-8") as f:
         lines = f.read().splitlines()
@@ -9,18 +12,14 @@ def get_grid(lines: list[str]) -> list[str]:
     return [line.ljust(width, " ") for line in lines]
 
 
-def calculate_solution(numbers: list[int], calcSymbol: str) -> int:
-    match calcSymbol:
+def calculate_solution(numbers: list[int], calc_symbol: str) -> int:
+    match calc_symbol:
         case "+":
-            result = 0
-            for number in numbers:
-                result += number
+            result = sum(numbers)
         case "*":
-            result = 1
-            for number in numbers:
-                result *= number
+            result = math.prod(numbers)
         case _:
-            raise ValueError(f"Unbekannter Operator: {calcSymbol}")
+            raise ValueError(f"Unbekannter Operator: {calc_symbol}")
 
     return result
 
@@ -57,12 +56,13 @@ def get_group_indexes(grid: list[str]) -> list[int]:
     return result
 
 
-def getCalcSymbol(inputString: str) -> str:
-    for char in inputString:
+def get_calc_symbol(input_string: str) -> str:
+    for char in input_string:
         if char == "*":
             return "*"
         elif char == "+":
             return "+"
+    raise ValueError(f"Kein Operator gefunden: {input_string}")
 
 
 def get_solution(grid_array: list[list[str]]) -> int:
@@ -71,6 +71,7 @@ def get_solution(grid_array: list[list[str]]) -> int:
         numbers: list[int] = []
         for num in range(len(grid_array[0][x])):
             number_chars = ""
+            # Ziffern werden spaltenweise zu Zahlen zusammengesetzt.
             for y in range(len(grid_array)):
                 char = grid_array[y][x][num]
                 if char.isdigit():
@@ -78,8 +79,8 @@ def get_solution(grid_array: list[list[str]]) -> int:
 
             if number_chars:
                 numbers.append(int(number_chars))
-        calcSymbol = getCalcSymbol(grid_array[-1][x])
-        result += calculate_solution(numbers, calcSymbol)
+        calc_symbol = get_calc_symbol(grid_array[-1][x])
+        result += calculate_solution(numbers, calc_symbol)
 
     return result
 
