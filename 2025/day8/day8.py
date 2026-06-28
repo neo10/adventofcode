@@ -42,6 +42,7 @@ class UnionFind:
     boxes: list[JunctionBox]
     parent: dict[int, int] = field(init=False)
     sizes: dict[int, int] = field(init=False)
+    last_connection: tuple[JunctionBox, JunctionBox] | None = field(init=False, default=None)
 
     def __post_init__(self):
         self.parent = {box.id: box.id for box in self.boxes}
@@ -59,6 +60,7 @@ class UnionFind:
         right_root = self.find(right)
 
         if left_root != right_root:
+            self.last_connection = (left, right)
             self.parent[right_root] = left_root
             self.sizes[left_root] += self.sizes[right_root]
             del self.sizes[right_root]
@@ -100,7 +102,14 @@ for wire in wires[:1000]:
 
 
 sizes = sorted(union.get_sizes().values(), reverse=True)
-print(sizes)
 solution1 = sizes[0] * sizes[1] * sizes[2]
-
 print(f"Solution1={solution1}")
+
+
+# Part2:
+union2 = UnionFind(junction_boxes)
+for wire in wires:
+    union2.connect(wire.left_box, wire.right_box)
+
+solution2 = union2.last_connection[0].x_pos * union2.last_connection[1].x_pos
+print(f"Solution2={solution2}")
