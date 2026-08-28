@@ -59,5 +59,3 @@ for bereich in bereiche:
             solution2 += number
 print("Lösung1: ", solution1)
 print("Lösung2: ", solution2)
-
-print(is_repeated_any_number(123123123))
